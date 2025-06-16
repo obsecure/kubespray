@@ -1,0 +1,81 @@
+all:
+  hosts:
+    master01:
+      ansible_host: 10.0.1.7
+      ip: 10.0.1.7
+      access_ip: 10.0.1.7
+    master02:
+      ansible_host: 10.0.1.8
+      ip: 10.0.1.8
+      access_ip: 10.0.1.8
+    master03:
+      ansible_host: 10.0.1.9
+      ip: 10.0.1.9
+      access_ip: 10.0.1.9
+    ingress01:
+      ansible_host: 10.0.1.10
+      ip: 10.0.1.10
+      access_ip: 10.0.1.10
+    ingress02:
+      ansible_host: 10.0.1.11
+      ip: 10.0.1.11
+      access_ip: 10.0.1.11
+    mgmt01:
+      ansible_host: 10.0.1.13
+      ip: 10.0.1.13
+      access_ip: 10.0.1.13
+    mgmt02:
+      ansible_host: 10.0.1.14
+      ip: 10.0.1.14
+      access_ip: 10.0.1.14
+    mgmt03:
+      ansible_host: 10.0.1.15
+      ip: 10.0.1.15
+      access_ip: 10.0.1.15
+    mgmt04:
+      ansible_host: 10.0.1.16
+      ip: 10.0.1.16
+      access_ip: 10.0.1.16
+    mgmt05:
+      ansible_host: 10.0.1.17
+      ip: 10.0.1.17
+      access_ip: 10.0.1.17
+    app01:
+      ansible_host: 10.0.1.18
+      ip: 10.0.1.18
+      access_ip: 10.0.1.18
+    app02:
+      ansible_host: 10.0.1.19
+      ip: 10.0.1.19
+      access_ip: 10.0.1.19
+    
+    # GPU 노드도 동일하게 추가
+  children:
+    kube_control_plane:
+      hosts:
+        master01:
+        master02:
+        master03:
+    kube_node:
+      hosts:
+        ingress01:
+        ingress02:
+        mgmt01:
+        mgmt02:
+        mgmt03:
+        mgmt04:
+        mgmt05:
+        app01:
+        app02:
+        # GPU 노드 추가
+    etcd:
+      hosts:
+        master01:
+        master02:
+        master03:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
